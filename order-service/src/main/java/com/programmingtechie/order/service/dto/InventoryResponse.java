@@ -1,4 +1,4 @@
-package com.programmingtechie.inventory.service.dto;
+package com.programmingtechie.order.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class InventoryResponse {
 	private String skuCode;
-	private Boolean isInStock; // TODO: =================================
+	private Boolean isInStock;
 }

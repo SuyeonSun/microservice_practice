@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class InventoryController {
 	private final InventoryService inventoryService;
 
-	// https://localhost:8082/api/inventory?sku-code=iphone&sku-code=iphone1
+	// https://localhost:8082/api/inventory?skuCode=iphone&skuCode=iphone1
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public List<InventoryResponse> isInStock(@RequestParam List<String> skuCode) {

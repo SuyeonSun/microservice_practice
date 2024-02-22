@@ -1,5 +1,6 @@
 package com.programmingtechie.order.service.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.programmingtechie.order.service.dto.InventoryResponse;
 import com.programmingtechie.order.service.dto.OrderLineItemsDto;
 import com.programmingtechie.order.service.dto.OrderRequest;
 import com.programmingtechie.order.service.model.Order;
@@ -40,14 +42,20 @@ public class OrderService {
 
 		// call Inventory Service, and place order if product is in
 		// stock
-		Boolean result = webClient.get()
+		InventoryResponse[] inventoryResponseArray = webClient.get()
 			.uri("http://localhost:8082/api/inventory",
 				uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
 			.retrieve()
-			.bodyToMono(Boolean.class) // read data from webClient
+			.bodyToMono(InventoryResponse[].class) // read data from webClient
 			.block(); // to make a synchronous request
 
-		if (result) {
+		// System.out.println(inventoryResponseArray.length); // 0
+
+		boolean allProductsInStock = Arrays.stream(inventoryResponseArray)
+			.allMatch(inventoryResponse -> inventoryResponse.getIsInStock());
+			// .allMatch(InventoryResponse::getIsInStock);
+
+		if (allProductsInStock) {
 			orderRepository.save(order);
 		} else {
 			throw new IllegalArgumentException("Product is not in stock, please try later.");
