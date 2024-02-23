@@ -9,9 +9,9 @@ import com.programmingtechie.inventory.service.model.Inventory;
 import com.programmingtechie.inventory.service.repository.InventoryRepository;
 
 @SpringBootApplication
-public class Application {
+public class InventoryServiceApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(InventoryServiceApplication.class, args);
 	}
 
 	// load the data when application starts
